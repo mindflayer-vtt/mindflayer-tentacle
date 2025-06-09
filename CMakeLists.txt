@@ -11,5 +11,5 @@ else()
     message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 endif()
 
-add_executable(mindflayer_tentacle src/main.cpp)
+add_executable(mindflayer_tentacle src/mindflayer/main.cpp src/mindflayer/input/UserInputDevice.cpp src/mindflayer/input/UserInputDevice.h src/mindflayer/controller/Controller.cpp src/mindflayer/controller/Controller.h src/mindflayer/server/ServerConnection.cpp src/mindflayer/server/ServerConnection.h)
 target_link_libraries(mindflayer_tentacle ${CONAN_LIBS})

@@ -1,11 +1,14 @@
 #include <cstdio>
-//#include <unistd.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <linux/input.h>
 #include <execution>
+#include <vector>
+#include "input/UserInputDevice.h"
+#include "controller/Controller.h"
+#include "server/ServerConnection.h"
 
-// typical use : sudo ./a.out /dev/input/event*
-int main(int argc, char *argv[]) {
+int test_usb_devices(int argc, char *argv[]) {
     struct input_event ev[64];
     int fd[argc], idev, value, size = sizeof(struct input_event);
     char name[256] = "Unknown", uniq[256] = "Unknown", phys[256] = "Unknown";
@@ -31,4 +34,17 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+}
+
+// typical use : sudo ./a.out /dev/input/event*
+int main(int argc, char *argv[]) {
+    test_usb_devices(argc, argv);
+    std::vector<std::shared_ptr<UserInputDevice>> devices;
+    std::vector<std::shared_ptr<Controller>> controllers;
+    std::unique_ptr<ServerConnection> serverConnection;
+
+    devices[0]->notify(std::weak_ptr<Controller>(controllers[0]));
+    serverConnection->attach(controllers[0]);
+
+
 }
